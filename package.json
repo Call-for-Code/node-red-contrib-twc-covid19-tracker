@@ -1,0 +1,38 @@
+{
+  "name": "node-red-contrib-twc-covid19-tracker",
+  "version": "0.1.0",
+  "description": "Node-RED node for The Weather Company COVID-19 Disease Tracker Data API",
+  "main": "twc-covid19-tracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker.git"
+  },
+  "keywords": [
+    "node-red",
+    "twc",
+    "disease",
+    "virus",
+    "covid",
+    "covid19",
+    "covid-19",
+    "covid_19"
+  ],
+  "author": "John Walicki <johnwalicki@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/issues"
+  },
+  "homepage": "https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker#readme",
+  "node-red": {
+    "nodes": {
+      "twc-covid19-tracker": "twc-covid19-tracker.js"
+    }
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}

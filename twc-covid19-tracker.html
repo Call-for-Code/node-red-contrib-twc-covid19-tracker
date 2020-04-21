@@ -1,0 +1,81 @@
+<script type="text/javascript">
+  RED.nodes.registerType('twc-covid19-tracker',{
+    category: 'COVID-19',
+    color: "#a2a9b0",
+    icon: "icons/virus-solid.png",
+    inputs:1,
+    outputs:1,
+    defaults: {
+      name: { value:""},
+      units: { value:"e"},
+      locationtype: {value:"geocode",required: true},
+      location: {value:"",required: true},
+      territory: {value:"country"},
+      apikey: {value:"", type:"pwsapikey",required: true}
+    },
+    label: function() {
+      return this.name||"TWC COVID-19 Tracker";
+    }
+  });
+</script>
+
+
+<script type="text/x-red" data-template-name="twc-covid19-tracker">
+  <div class="form-row">
+    <label for="node-input-apikey"><i class="fa fa-key"></i> API Key</label>
+    <input type="text" id="node-input-apikey">
+  </div>
+  <div class="form-row">
+    <label for="node-input-territory"><i class="fa fa-globe"></i> Territory</label>
+    <select id="node-input-territory">
+      <option value="country">Country</option>
+      <option value="state">State</option>
+      <option value="county">County</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-locationtype"><i class="fa fa-globe"></i> Location Type</label>
+    <select id="node-input-locationtype">
+      <option value="geocode">Request by Geocode</option>
+      <option value="placeid">Request by Place ID</option>
+      <option value="postalKey">Request by Postal Key</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-location"><i class="fa fa-map-marker"></i> Location</label>
+    <input type="text" id="node-input-location" placeholder="40.74,-73.99">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="twc-covid19-tracker">
+  <p>The API allows you to track the progression of the COVID-19 disease for a given location.
+  <p>The API allows you to track the progression of the COVID-19 disease for a given location.  It provides information regarding active diseases including confirmed cases,
+  deaths, and recoveries over a period of up to 60 days in the past.
+  <p>See the <a target="_blank" href="https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0">online documentation</a>
+for more information about the <strong>The Weather Company APIs for Disease Tracking</strong>.</p>
+  <h3>Inputs:</h3>
+  <dl class="message-properties">
+    <dt class="optional">msg.twcparams.locationtype <span class="property-type">string</span></dt>
+    <dd>If specified, override edit panel.</dd>
+    <dd>"geocode" - Request by Geocode</dd>
+    <dd>"placeid" - Request by Place ID</dd>
+    <dd>"postalKey" - Request by Postal Key</dd>
+    <dt class="optional">msg.twcparams.location <span class="property-type">string</span></dt>
+    <dd>If specified, override edit panel. See examples in the above documentation for geocodes, Place ID and Postal Keys</dd>
+    <dt class="optional">msg.twcparams.territory <span class="property-type">string</span></dt>
+    <dd>If specified, override edit panel. 'country', 'state', 'county' territory</dd>
+  </dl>
+  <h3>Outputs:</h3>
+  <dl class="message-properties">
+    <dt class="optional">msg.payload.covid19 <span class="property-type">object</span></dt>
+    <dd>Array of json objects containing covid-19 data</dd>
+    <dd>Find details on the <a target="_blank" href="https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0">TWC Disease Tracker (60-Day)</a> data elements and definitions.</dd>
+    <dt class="optional">msg.twcparams <span class="property-type">object</span></dt>
+    <dd>Array of json objects containing request parameters</dd>
+  </dl>
+
+</script>

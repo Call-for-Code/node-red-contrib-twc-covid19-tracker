@@ -1,0 +1,774 @@
+[
+    {
+        "id": "977ec606.0271b",
+        "type": "tab",
+        "label": "TWC COVID-19 Tracker API",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9b137dff.ca526",
+        "type": "inject",
+        "z": "977ec606.0271b",
+        "name": "60 Day Forecast",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 120,
+        "y": 280,
+        "wires": [
+            [
+                "e243eca6.153858",
+                "434e1d98.fdbb84",
+                "80f63b6a.451ff8"
+            ]
+        ]
+    },
+    {
+        "id": "747e39a4.45a148",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day Country forecast - geocode",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/country/60day?geocode={{geocode}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 630,
+        "y": 240,
+        "wires": [
+            [
+                "dc7b3d48.2a4288"
+            ]
+        ]
+    },
+    {
+        "id": "dc7b3d48.2a4288",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "complete": "true",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "55ee29cd.a496f8",
+        "type": "comment",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker Data API Docs",
+        "info": "https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0/edit",
+        "x": 170,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "625a5609.9836c",
+        "type": "comment",
+        "z": "977ec606.0271b",
+        "name": "County - v3/wx/disease/tracker/county/60day",
+        "info": "",
+        "x": 210,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "132cec52.e0312c",
+        "type": "comment",
+        "z": "977ec606.0271b",
+        "name": "State - v3/wx/disease/tracker/state/60day",
+        "info": "",
+        "x": 200,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f0f1a3ca.d95d5",
+        "type": "comment",
+        "z": "977ec606.0271b",
+        "name": "Country - v3/wx/disease/tracker/country/60day",
+        "info": "",
+        "x": 210,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b6cdd6eb.32fec",
+        "type": "comment",
+        "z": "977ec606.0271b",
+        "name": "by geocode, placeid, postalKey",
+        "info": "",
+        "x": 370,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e2b829d2.c43448",
+        "type": "inject",
+        "z": "977ec606.0271b",
+        "name": "Set TWC Disease Tracker API Key",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "483bd692.684d9"
+            ]
+        ]
+    },
+    {
+        "id": "483bd692.684d9",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": " TWC API Key",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e243eca6.153858",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "geocode",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "geocode",
+                "pt": "msg",
+                "to": "40.74,-73.99",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 240,
+        "wires": [
+            [
+                "747e39a4.45a148"
+            ]
+        ]
+    },
+    {
+        "id": "9f131603.2d7e48",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day Country forecast - placeid",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/country/60day?placeid={{placeid}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 620,
+        "y": 280,
+        "wires": [
+            [
+                "e4dbaa49.c1fa48"
+            ]
+        ]
+    },
+    {
+        "id": "e4dbaa49.c1fa48",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "434e1d98.fdbb84",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "placeid",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "placeid",
+                "pt": "msg",
+                "to": "327145917e06d09373dd2760425a88622a62d248fd97550eb4883737d8d1173b",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 280,
+        "wires": [
+            [
+                "9f131603.2d7e48"
+            ]
+        ]
+    },
+    {
+        "id": "c19058be.4141f",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day Country forecast - postalKey",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/country/60day?postalKey={{postalKey}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 630,
+        "y": 320,
+        "wires": [
+            [
+                "29b32c82.56d9cc"
+            ]
+        ]
+    },
+    {
+        "id": "29b32c82.56d9cc",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "80f63b6a.451ff8",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "postalKey",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "postalKey",
+                "pt": "msg",
+                "to": "10001:US",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 320,
+        "wires": [
+            [
+                "c19058be.4141f"
+            ]
+        ]
+    },
+    {
+        "id": "4d0d4eb7.0bce68",
+        "type": "inject",
+        "z": "977ec606.0271b",
+        "name": "60 Day Forecast",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 120,
+        "y": 460,
+        "wires": [
+            [
+                "bdcfdbdb.3c4f58",
+                "2deb25e8.97d4f2",
+                "119e2abe.d49edd"
+            ]
+        ]
+    },
+    {
+        "id": "4252fd5f.1216cc",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day State forecast - geocode",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/state/60day?geocode={{geocode}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 620,
+        "y": 420,
+        "wires": [
+            [
+                "50f75b6c.9f6094"
+            ]
+        ]
+    },
+    {
+        "id": "50f75b6c.9f6094",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "bdcfdbdb.3c4f58",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "geocode",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "geocode",
+                "pt": "msg",
+                "to": "40.74,-73.99",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "4252fd5f.1216cc"
+            ]
+        ]
+    },
+    {
+        "id": "256bc4e6.ffa15c",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day State forecast - placeid",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/state/60day?placeid={{placeid}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 610,
+        "y": 460,
+        "wires": [
+            [
+                "36f35de4.13caca"
+            ]
+        ]
+    },
+    {
+        "id": "36f35de4.13caca",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "2deb25e8.97d4f2",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "placeid",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "placeid",
+                "pt": "msg",
+                "to": "327145917e06d09373dd2760425a88622a62d248fd97550eb4883737d8d1173b",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 460,
+        "wires": [
+            [
+                "256bc4e6.ffa15c"
+            ]
+        ]
+    },
+    {
+        "id": "a8fa7722.1b2518",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day State forecast - postalKey",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/state/60day?postalKey={{postalKey}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 620,
+        "y": 500,
+        "wires": [
+            [
+                "494e07cb.e0a598"
+            ]
+        ]
+    },
+    {
+        "id": "494e07cb.e0a598",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "119e2abe.d49edd",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "postalKey",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "postalKey",
+                "pt": "msg",
+                "to": "07450:US",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [
+                "a8fa7722.1b2518"
+            ]
+        ]
+    },
+    {
+        "id": "c30cb050.e08f3",
+        "type": "inject",
+        "z": "977ec606.0271b",
+        "name": "60 Day Forecast",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 120,
+        "y": 640,
+        "wires": [
+            [
+                "bf9d93b5.a0e73",
+                "29381d53.7d372a",
+                "4876e3de.4fc04c"
+            ]
+        ]
+    },
+    {
+        "id": "51649452.6d4abc",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day County forecast - geocode",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/county/60day?geocode={{geocode}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 620,
+        "y": 600,
+        "wires": [
+            [
+                "e713c4ec.a674c"
+            ]
+        ]
+    },
+    {
+        "id": "e713c4ec.a674c",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "bf9d93b5.a0e73",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "geocode",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "geocode",
+                "pt": "msg",
+                "to": "40.58,-111.66",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 600,
+        "wires": [
+            [
+                "51649452.6d4abc"
+            ]
+        ]
+    },
+    {
+        "id": "65aa8ce0.604764",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day County forecast - placeid",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/county/60day?placeid={{placeid}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 620,
+        "y": 640,
+        "wires": [
+            [
+                "fc86eb87.58b1b"
+            ]
+        ]
+    },
+    {
+        "id": "fc86eb87.58b1b",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "29381d53.7d372a",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "placeid",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "placeid",
+                "pt": "msg",
+                "to": "327145917e06d09373dd2760425a88622a62d248fd97550eb4883737d8d1173b",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 640,
+        "wires": [
+            [
+                "65aa8ce0.604764"
+            ]
+        ]
+    },
+    {
+        "id": "ea4f4f13.b882e",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API 60-Day County forecast - postalKey",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/county/60day?postalKey={{postalKey}}&format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 630,
+        "y": 680,
+        "wires": [
+            [
+                "e78464f5.fb8468"
+            ]
+        ]
+    },
+    {
+        "id": "e78464f5.fb8468",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 950,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "4876e3de.4fc04c",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "postalKey",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "postalKey",
+                "pt": "msg",
+                "to": "07450:US",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 680,
+        "wires": [
+            [
+                "ea4f4f13.b882e"
+            ]
+        ]
+    }
+]

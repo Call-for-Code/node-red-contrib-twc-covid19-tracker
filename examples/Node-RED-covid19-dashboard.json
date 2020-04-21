@@ -1,0 +1,619 @@
+[
+    {
+        "id": "949f78f1.1ce9b",
+        "type": "tab",
+        "label": "COVID Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9bd08dcc.195b38",
+        "type": "debug",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 830,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "cc7c8083.69d1e",
+        "type": "function",
+        "z": "949f78f1.1ce9b",
+        "name": " Plot 60 days of COVID infections",
+        "func": "// This function plots a line chart of 60 days of COVID infections\n// msg.payload.covid19.dateReport[0]  // most recent date, counting backwards in time\n// msg.payload.covid19.confirmed[0]\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar dateReport = new Date( msg.payload.covid19.dateReport[0] ).getTime() ;\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Confirmed\",\"Deaths\"],\n                   \"data\":[ [{\"x\":dateReport,\"y\":msg.payload.covid19.confirmed[0]}],\n                            [{\"x\":dateReport,\"y\":msg.payload.covid19.deaths[0]}],\n                          ],\n                   \"labels\":[\"\",\"\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.covid19.dateReport.length; i++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[i] ).getTime() ;\n    ChartData[0].data[0].push( { \"x\":dateReport,\"y\":msg.payload.covid19.confirmed[i] } )\n    ChartData[0].data[1].push( { \"x\":dateReport,\"y\":msg.payload.covid19.deaths[i] } )\n}\n\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 920,
+        "y": 300,
+        "wires": [
+            [
+                "99c80ce.411767"
+            ]
+        ]
+    },
+    {
+        "id": "99c80ce.411767",
+        "type": "ui_chart",
+        "z": "949f78f1.1ce9b",
+        "name": "COVID Chart",
+        "group": "5c91fe90.935be",
+        "order": 0,
+        "width": "12",
+        "height": "10",
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1210,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e4a7392.06ed68",
+        "type": "ui_button",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "group": "b2b3bb03.b2093",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "All USA COVID Stats",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "ed9a25ae.d200b8"
+            ]
+        ]
+    },
+    {
+        "id": "b51515a3.56d9",
+        "type": "change",
+        "z": "949f78f1.1ce9b",
+        "name": "USA API Parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "twcparams",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.location",
+                "pt": "msg",
+                "to": "10001:US",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.locationtype",
+                "pt": "msg",
+                "to": "postalKey",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.territory",
+                "pt": "msg",
+                "to": "country",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 380,
+        "wires": [
+            [
+                "716dc5a6.c744ac"
+            ]
+        ]
+    },
+    {
+        "id": "e8063d9f.ede7b8",
+        "type": "ui_dropdown",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "label": "Select State:",
+        "tooltip": "",
+        "place": "State",
+        "group": "b2b3bb03.b2093",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [],
+        "payload": "",
+        "topic": "",
+        "x": 570,
+        "y": 140,
+        "wires": [
+            [
+                "d3c1cec4.8a862",
+                "5c70983d.4c6878"
+            ]
+        ]
+    },
+    {
+        "id": "d63740df.69b128",
+        "type": "change",
+        "z": "949f78f1.1ce9b",
+        "name": "Load States",
+        "rules": [
+            {
+                "t": "set",
+                "p": "options",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "3ceb6ce6.58af84",
+                "e8063d9f.ede7b8"
+            ]
+        ]
+    },
+    {
+        "id": "3ceb6ce6.58af84",
+        "type": "debug",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "options",
+        "targetType": "msg",
+        "x": 570,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "75b7d44f.41298c",
+        "type": "inject",
+        "z": "949f78f1.1ce9b",
+        "name": "Load Table of States",
+        "topic": "",
+        "payload": "[{\"Alaska\":\"99501:US\"},{\"Alabama\":\"35801:US\"},{\"Arkansas\":\"72201:US\"},{\"American Samoa\":\"96799:US\"},{\"Arizona\":\"85001:US\"},{\"California\":\"90001:US\"},{\"Colorado\":\"80201:US\"},{\"Connecticut\":\"06101:US\"},{\"District of Columbia\":\"20001:US\"},{\"Delaware\":\"19901:US\"},{\"Florida\":\"33124:US\"},{\"Georgia\":\"30301:US\"},{\"Guam\":\"GU:US\"},{\"Hawaii\":\"96801:US\"},{\"Iowa\":\"50301:US\"},{\"Idaho\":\"83254:US\"},{\"Illinois\":\"60601:US\"},{\"Indiana\":\"46201:US\"},{\"Kansas\":\"67201:US\"},{\"Kentucky\":\"41701:US\"},{\"Louisiana\":\"70112:US\"},{\"Massachusetts\":\"02101:US\"},{\"Maryland\":\"21201:US\"},{\"Maine\":\"04032:US\"},{\"Michigan\":\"49036:US\"},{\"Minnesota\":\"55801:US\"},{\"Missouri\":\"63101:US\"},{\"Mississippi\":\"39530:US\"},{\"Montana\":\"59044:US\"},{\"North Carolina\":\"27565:US\"},{\"North Dakota\":\"58282:US\"},{\"Nebraska\":\"68901:US\"},{\"New Hampshire\":\"03217:US\"},{\"New Jersey\":\"07450:US\"},{\"New Mexico\":\"87500:US\"},{\"Nevada\":\"89501:US\"},{\"New York\":\"10001:US\"},{\"Ohio\":\"44101:US\"},{\"Oklahoma\":\"74101:US\"},{\"Oregon\":\"74101:US\"},{\"Pennsylvania\":\"15201:US\"},{\"Puerto Rico\":\"00600:US\"},{\"Rhode Island\":\"02840:US\"},{\"South Carolina\":\"29020:US\"},{\"South Dakota\":\"57401:US\"},{\"Tennessee\":\"37201:US\"},{\"Texas\":\"78701:US\"},{\"Utah\":\"84321:US\"},{\"Virginia\":\"24517:US\"},{\"Virgin Islands\":\"00801:US\"},{\"Vermont\":\"05751:US\"},{\"Washington\":\"98004:US\"},{\"Wisconsin\":\"53201:US\"},{\"West Virginia\":\"25813:US\"},{\"Wyoming\":\"82941:US\"},{\"USA\":\"USA\"}]",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "d63740df.69b128"
+            ]
+        ]
+    },
+    {
+        "id": "d3c1cec4.8a862",
+        "type": "debug",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 770,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "7537cabf.2d1a54",
+        "type": "comment",
+        "z": "949f78f1.1ce9b",
+        "name": "Select States - COVID Data",
+        "info": "",
+        "x": 260,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "69e90a26.2618dc",
+        "type": "change",
+        "z": "949f78f1.1ce9b",
+        "name": "State API Parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "twcparams",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.location",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.locationtype",
+                "pt": "msg",
+                "to": "postalKey",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.territory",
+                "pt": "msg",
+                "to": "state",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 300,
+        "wires": [
+            [
+                "716dc5a6.c744ac"
+            ]
+        ]
+    },
+    {
+        "id": "a6358f27.5fd3",
+        "type": "ui_table",
+        "z": "949f78f1.1ce9b",
+        "group": "b2b3bb03.b2093",
+        "name": "COVID Data",
+        "order": 2,
+        "width": "8",
+        "height": "8",
+        "columns": [
+            {
+                "field": "dateReport",
+                "title": "Date",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "confirmed",
+                "title": "Confirmed",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "deaths",
+                "title": "Deaths",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 1210,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ee3d139e.a786d8",
+        "type": "function",
+        "z": "949f78f1.1ce9b",
+        "name": "Build Table",
+        "func": "var TableArray = [];\nfor( i=0; i < msg.payload.covid19.dateReport.length; i++ ) {\n      var TableEntry = {};\n      TableEntry.dateReport = msg.payload.covid19.dateReport[i] ;\n      TableEntry.confirmed = msg.payload.covid19.confirmed[i] ;\n      TableEntry.deaths = msg.payload.covid19.deaths[i] ;\n      TableArray.push( TableEntry );\n}\n\nmsg.payload = TableArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 850,
+        "y": 340,
+        "wires": [
+            [
+                "a6358f27.5fd3"
+            ]
+        ]
+    },
+    {
+        "id": "5c70983d.4c6878",
+        "type": "switch",
+        "z": "949f78f1.1ce9b",
+        "name": "Selection",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 760,
+        "y": 140,
+        "wires": [
+            [
+                "92295791.8358b"
+            ]
+        ]
+    },
+    {
+        "id": "885bbc07.bf0728",
+        "type": "ui_text",
+        "z": "949f78f1.1ce9b",
+        "group": "b2b3bb03.b2093",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Source:",
+        "format": "{{msg.payload.covid19.source[0]}}",
+        "layout": "row-spread",
+        "x": 1200,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3d334536.39340a",
+        "type": "ui_text",
+        "z": "949f78f1.1ce9b",
+        "group": "5c91fe90.935be",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Location",
+        "label": "",
+        "format": "{{msg.payload.covid19.recordLocation}}",
+        "layout": "row-center",
+        "x": 840,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ed9a25ae.d200b8",
+        "type": "change",
+        "z": "949f78f1.1ce9b",
+        "name": "USA",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "USA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "e8063d9f.ede7b8"
+            ]
+        ]
+    },
+    {
+        "id": "92295791.8358b",
+        "type": "switch",
+        "z": "949f78f1.1ce9b",
+        "name": "USA Selected",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "USA",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "69e90a26.2618dc"
+            ],
+            [
+                "b51515a3.56d9"
+            ]
+        ]
+    },
+    {
+        "id": "4fbfad79.8845f4",
+        "type": "switch",
+        "z": "949f78f1.1ce9b",
+        "name": "Set Sources",
+        "property": "twcparams.territory",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "state",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "country",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 850,
+        "y": 380,
+        "wires": [
+            [
+                "885bbc07.bf0728"
+            ],
+            [
+                "ef6d1383.5f583"
+            ]
+        ]
+    },
+    {
+        "id": "ef6d1383.5f583",
+        "type": "change",
+        "z": "949f78f1.1ce9b",
+        "name": "Numerous",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.covid19.source[0]",
+                "pt": "msg",
+                "to": "Numerous",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 420,
+        "wires": [
+            [
+                "885bbc07.bf0728"
+            ]
+        ]
+    },
+    {
+        "id": "716dc5a6.c744ac",
+        "type": "twc-covid19-tracker",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "units": "e",
+        "locationtype": "geocode",
+        "location": "40,73",
+        "territory": "country",
+        "apikey": "b9e98502.32ded8",
+        "x": 610,
+        "y": 340,
+        "wires": [
+            [
+                "3d334536.39340a",
+                "cc7c8083.69d1e",
+                "ee3d139e.a786d8",
+                "4fbfad79.8845f4",
+                "9bd08dcc.195b38"
+            ]
+        ]
+    },
+    {
+        "id": "5c91fe90.935be",
+        "type": "ui_group",
+        "z": "",
+        "name": "COVID Stats",
+        "tab": "2d6cfd05.42979a",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "b2b3bb03.b2093",
+        "type": "ui_group",
+        "z": "",
+        "name": "Search",
+        "tab": "2d6cfd05.42979a",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "b9e98502.32ded8",
+        "type": "pwsapikey",
+        "z": "",
+        "name": ""
+    },
+    {
+        "id": "2d6cfd05.42979a",
+        "type": "ui_tab",
+        "z": "",
+        "name": "COVID Tracker",
+        "icon": "dashboard",
+        "order": 9,
+        "disabled": false,
+        "hidden": false
+    }
+]
