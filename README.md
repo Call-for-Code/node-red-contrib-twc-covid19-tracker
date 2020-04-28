@@ -20,7 +20,7 @@ To use **The Weather Company API for COVID-19 Disease Tracking**, you need an **
 
 ## node-red-contrib-twc-covid19-tracker Nodes
 
-These Node-RED package creates a **twc covid19 tracker** nodes in your Node-RED palette.
+This Node-RED package creates **twc covid19 tracker** and **twc covid19 country report** nodes in your Node-RED palette.
 - **twc covid19 tracker** - Query 60 day history of COVID-19 statistics at the Country, State, County level by Geocode, Place ID or Postal Code.
 - **twc covid19 country report** - Query the current state of a disease for a set of countries globally.
 
