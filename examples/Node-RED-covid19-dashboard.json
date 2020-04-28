@@ -561,7 +561,6 @@
         "type": "twc-covid19-tracker",
         "z": "949f78f1.1ce9b",
         "name": "",
-        "units": "e",
         "locationtype": "geocode",
         "location": "40,73",
         "territory": "country",
@@ -577,6 +576,134 @@
                 "9bd08dcc.195b38"
             ]
         ]
+    },
+    {
+        "id": "6ef57d56.3bdb04",
+        "type": "twc-covid19-country-report",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "apikey": "16fb6e86.105491",
+        "x": 430,
+        "y": 540,
+        "wires": [
+            [
+                "48ef6a8a.0a8814",
+                "7b350181.ef0da"
+            ]
+        ]
+    },
+    {
+        "id": "48ef6a8a.0a8814",
+        "type": "debug",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 690,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "7b350181.ef0da",
+        "type": "function",
+        "z": "949f78f1.1ce9b",
+        "name": "Build Table",
+        "func": "var TableArray = [];\nfor( i=0; i < msg.payload.covid19.recordLocation.length; i++ ) {\n      var TableEntry = {};\n      TableEntry.recordLocation = msg.payload.covid19.recordLocation[i] ;\n      TableEntry.confirmed = msg.payload.covid19.confirmed[i] ;\n      TableEntry.deaths = msg.payload.covid19.deaths[i] ;\n      TableArray.push( TableEntry );\n}\n\nmsg.payload = TableArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 540,
+        "wires": [
+            [
+                "4fac4696.7053c"
+            ]
+        ]
+    },
+    {
+        "id": "4fac4696.7053c",
+        "type": "ui_table",
+        "z": "949f78f1.1ce9b",
+        "group": "ef22f34f.ac05d8",
+        "name": "COVID Country Reports",
+        "order": 2,
+        "width": "8",
+        "height": "10",
+        "columns": [
+            {
+                "field": "recordLocation",
+                "title": "Country",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "confirmed",
+                "title": "Confirmed",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "deaths",
+                "title": "Deaths",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 930,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "737f8617.ea0f58",
+        "type": "ui_button",
+        "z": "949f78f1.1ce9b",
+        "name": "",
+        "group": "ef22f34f.ac05d8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Get Country Reports",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "6ef57d56.3bdb04"
+            ]
+        ]
+    },
+    {
+        "id": "f0c3a0e3.8625d8",
+        "type": "comment",
+        "z": "949f78f1.1ce9b",
+        "name": "Query Country Reports",
+        "info": "",
+        "x": 240,
+        "y": 500,
+        "wires": []
     },
     {
         "id": "5c91fe90.935be",
@@ -601,10 +728,15 @@
         "collapse": false
     },
     {
-        "id": "b9e98502.32ded8",
-        "type": "pwsapikey",
+        "id": "ef22f34f.ac05d8",
+        "type": "ui_group",
         "z": "",
-        "name": ""
+        "name": "Country Reports",
+        "tab": "2d6cfd05.42979a",
+        "order": 3,
+        "disp": true,
+        "width": "8",
+        "collapse": false
     },
     {
         "id": "2d6cfd05.42979a",

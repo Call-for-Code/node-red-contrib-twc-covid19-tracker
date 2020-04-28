@@ -1,0 +1,441 @@
+[
+    {
+        "id": "fcca33ef.033d48",
+        "type": "tab",
+        "label": "NJ County COVID",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "de9626f0.29ac1",
+        "type": "csv",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "x": 690,
+        "y": 100,
+        "wires": [
+            [
+                "153a4235.1409b6"
+            ]
+        ]
+    },
+    {
+        "id": "2d0eee90.33959a",
+        "type": "debug",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "twcparams",
+        "targetType": "msg",
+        "x": 1140,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "eebe56db.f20f3",
+        "type": "twc-covid19-tracker",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "locationtype": "geocode",
+        "location": "07450:US",
+        "territory": "country",
+        "apikey": "31e705d1.b851aa",
+        "x": 210,
+        "y": 240,
+        "wires": [
+            [
+                "727953cf.5d0e3c"
+            ]
+        ]
+    },
+    {
+        "id": "153a4235.1409b6",
+        "type": "change",
+        "z": "fcca33ef.033d48",
+        "name": "County API Parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "twcparams",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.location",
+                "pt": "msg",
+                "to": "payload.col3&\",\"&payload.col4",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.locationtype",
+                "pt": "msg",
+                "to": "geocode",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.territory",
+                "pt": "msg",
+                "to": "county",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 100,
+        "wires": [
+            [
+                "2d0eee90.33959a",
+                "eebe56db.f20f3"
+            ]
+        ]
+    },
+    {
+        "id": "33db1ecb.652ed2",
+        "type": "template",
+        "z": "fcca33ef.033d48",
+        "name": "NJ Counties",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Atlantic County, New Jersey,39.469354,-74.633758\nBergen County, New Jersey,40.959090,-74.074522\nBurlington County, New Jersey,39.875786,-74.663006\nCamden County, New Jersey,39.802352,-74.961251\nCape May County, New Jersey,39.086143,-74.847716\nCumberland County, New Jersey,39.328387,-75.121644\nEssex County, New Jersey,40.787217,-74.246136\nGloucester County, New Jersey,39.721019,-75.143708\nHudson County, New Jersey,40.731384,-74.078627\nHunterdon County, New Jersey,40.565283,-74.911970\nMercer County, New Jersey,40.282503,-74.703724\nMiddlesex County, New Jersey,40.439593,-74.407585\nMonmouth County, New Jersey,40.287056,-74.152446\nMorris County, New Jersey,40.858581,-74.547427\nOcean County, New Jersey,39.865850,-74.263027\nPassaic County, New Jersey,41.033763,-74.300308\nSalem County, New Jersey,39.573828,-75.357356\nSomerset County, New Jersey,40.565522,-74.619930\nSussex County, New Jersey,41.137424,-74.691855\nUnion County, New Jersey,40.659871,-74.308696\nWarren County, New Jersey,40.853524,-75.009542",
+        "output": "str",
+        "x": 510,
+        "y": 100,
+        "wires": [
+            [
+                "de9626f0.29ac1"
+            ]
+        ]
+    },
+    {
+        "id": "7592bb47.6437c4",
+        "type": "debug",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "36162b4.f85f1d4",
+        "type": "ui_table",
+        "z": "fcca33ef.033d48",
+        "group": "fc080bf2.5756a8",
+        "name": "COVID County Reports",
+        "order": 2,
+        "width": "8",
+        "height": "12",
+        "columns": [
+            {
+                "field": "recordLocation",
+                "title": "County",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "confirmed",
+                "title": "Confirmed",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "deaths",
+                "title": "Deaths",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 1,
+        "cts": true,
+        "x": 810,
+        "y": 240,
+        "wires": [
+            [
+                "31386413.cc2474",
+                "d927282c.c6d938",
+                "d4de80fd.7d38f8"
+            ]
+        ]
+    },
+    {
+        "id": "dc165cc4.4b6ae8",
+        "type": "ui_button",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "group": "fc080bf2.5756a8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Get NJ County Reports",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "33db1ecb.652ed2"
+            ]
+        ]
+    },
+    {
+        "id": "f222d61a.8b6c6",
+        "type": "comment",
+        "z": "fcca33ef.033d48",
+        "name": "Query County Reports",
+        "info": "",
+        "x": 160,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "727953cf.5d0e3c",
+        "type": "join",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "mode": "auto",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "77fe370e.8a3d78",
+                "79d1e6a.e230718"
+            ]
+        ]
+    },
+    {
+        "id": "77fe370e.8a3d78",
+        "type": "function",
+        "z": "fcca33ef.033d48",
+        "name": "Build Table",
+        "func": "// Save the COVID data for chart\nflow.set( \"COVIDdata\", msg.payload ) ;\n\n// Build a table\nvar TableArray = [];\nfor( i=0; i < msg.payload.length; i++ ) {\n      var TableEntry = {};\n      TableEntry.recordLocation = msg.payload[i].covid19.recordLocation ;\n      TableEntry.confirmed = msg.payload[i].covid19.confirmed[0] ;\n      TableEntry.deaths = msg.payload[i].covid19.deaths[0] ;\n      TableArray.push( TableEntry );\n}\n\nmsg.payload = TableArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "36162b4.f85f1d4",
+                "7592bb47.6437c4"
+            ]
+        ]
+    },
+    {
+        "id": "31386413.cc2474",
+        "type": "debug",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1050,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "79d1e6a.e230718",
+        "type": "debug",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d927282c.c6d938",
+        "type": "function",
+        "z": "fcca33ef.033d48",
+        "name": " Plot 60 days of COVID infections",
+        "func": "// This function plots a line chart of 60 days of COVID infections\n// msg.payload.covid19.dateReport[0]  // most recent date, counting backwards in time\n// msg.payload.covid19.confirmed[0]\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar dateReport = new Date( msg.payload.covid19.dateReport[0] ).getTime() ;\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Confirmed\",\"Deaths\"],\n                   \"data\":[ [{\"x\":dateReport,\"y\":msg.payload.covid19.confirmed[0]}],\n                            [{\"x\":dateReport,\"y\":msg.payload.covid19.deaths[0]}],\n                          ],\n                   \"labels\":[\"\",\"\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.covid19.dateReport.length; i++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[i] ).getTime() ;\n    ChartData[0].data[0].push( { \"x\":dateReport,\"y\":msg.payload.covid19.confirmed[i] } )\n    ChartData[0].data[1].push( { \"x\":dateReport,\"y\":msg.payload.covid19.deaths[i] } )\n}\n\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 260,
+        "y": 380,
+        "wires": [
+            [
+                "f3f1d8be.bc7c18"
+            ]
+        ]
+    },
+    {
+        "id": "f3f1d8be.bc7c18",
+        "type": "ui_chart",
+        "z": "fcca33ef.033d48",
+        "name": "COVID Chart",
+        "group": "f1af2f5d.b695b",
+        "order": 1,
+        "width": "12",
+        "height": "10",
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7685013c.e8b648",
+        "type": "comment",
+        "z": "fcca33ef.033d48",
+        "name": "Instructions",
+        "info": "I wanted to build an app that reports Covid-19 data by state / county.  I went on a long hunt to find an API that would return all counties in a state.  The best I could come up with is parsing the data from this wikipedia page...\nhttps://en.wikipedia.org/wiki/User:Michael_J/County_table \n\n- Edit the wikipedia page\n- Just copy the contents\n- Save the contents as a local file allcounties.txt\n- Cancel out of the wikipedia page edit.\n\nOn my Linux system, I grabbed three columns [ County name, Latitude, Longitude ], then cleaned it up.  \nHere's the pipeline of commands\n- cat the file\n- cut columns 13,42,45\n- remove the degree symbol\n- remove extraneous [ characters\n- grep on the + to give you all counties in USA\n- 3049 rows of data\n- grep on the State you are interested in\n- replace | with commas\n- remove the +\n- replace the unicode – with a normal dash - (the API expects a - minus longitude)\n- Copy the 21 counties in NJ into the template node\n\n\n$ cat allcounties.txt | cut -d\\| -f13,42,45 | tr -d '°' | tr -d '[' | grep \"+\" | grep \"New Jersey\" | sed -e 's/|/,/g' | sed -e 's/+//g' | sed -e 's/–/-/g'",
+        "x": 370,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "d4de80fd.7d38f8",
+        "type": "function",
+        "z": "fcca33ef.033d48",
+        "name": "Attributions",
+        "func": "// This function node builds an attribution string\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nmsg.payload = COVIDdata[msg.row].covid19.recordLocation + \" - \" + COVIDdata[msg.row].covid19.source[0]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 730,
+        "y": 380,
+        "wires": [
+            [
+                "e6252a7c.34fb6"
+            ]
+        ]
+    },
+    {
+        "id": "e6252a7c.34fb6",
+        "type": "ui_text",
+        "z": "fcca33ef.033d48",
+        "group": "f1af2f5d.b695b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "County Label",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 910,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "fc080bf2.5756a8",
+        "type": "ui_group",
+        "z": "",
+        "name": "New Jersey County Stats",
+        "tab": "70a38837.b2269",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "f1af2f5d.b695b",
+        "type": "ui_group",
+        "z": "",
+        "name": "COVID NJ County Charts",
+        "tab": "70a38837.b2269",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "70a38837.b2269",
+        "type": "ui_tab",
+        "z": "",
+        "name": "COVID NJ County Reports",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

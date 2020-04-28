@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  RED.nodes.registerType('twc-covid19-country-report',{
+    category: 'COVID-19',
+    color: "#a2a9b0",
+    icon: "icons/virus-solid.png",
+    inputs:1,
+    outputs:1,
+    defaults: {
+      name: { value:""},
+      apikey: {value:"", type:"covapikey",required: true}
+    },
+    label: function() {
+      return this.name||"TWC COVID-19 Country Report";
+    }
+  });
+</script>
+
+
+<script type="text/x-red" data-template-name="twc-covid19-country-report">
+  <div class="form-row">
+    <label for="node-input-apikey"><i class="fa fa-key"></i> API Key</label>
+    <input type="text" id="node-input-apikey">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name">
+  </div>
+</script>
+
+
+<script type="text/x-red" data-help-name="twc-covid19-country-report">
+  <p>This API allows you to view the current state of a disease for a set of countries globally.
+  <p>It provides information regarding active diseases including confirmed cases, deaths, and recoveries.
+  <p>See the <a target="_blank" href="https://weather.com/swagger-docs/ui/sun/v3/sunV3DiseaseTrackerCountryList.json">online documentation</a>
+for more information about the <strong>The Weather Company APIs for Disease Tracking</strong>.</p>
+  <h3>Outputs:</h3>
+  <dl class="message-properties">
+    <dt class="optional">msg.payload.covid19 <span class="property-type">object</span></dt>
+    <dd>Array of json objects containing covid-19 data</dd>
+    <dd>Find details on the <a target="_blank" href="https://weather.com/swagger-docs/ui/sun/v3/sunV3DiseaseTrackerCountryList.json">TWC Disease Tracker Country Report</a> data elements and definitions.</dd>
+  </dl>
+</script>

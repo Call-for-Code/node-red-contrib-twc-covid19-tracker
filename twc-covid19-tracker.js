@@ -1,19 +1,29 @@
 module.exports = function(RED) {
+  function covid19apikeyNode(n) {
+    RED.nodes.createNode(this,n);
+    var node = this;
+    //node.apikey = n.apikey;
+  }
+  RED.nodes.registerType("covapikey", covid19apikeyNode, {
+    credentials: {
+      apikey: {type: "password"}
+    }
+  });
+
   function twcCovid19TrackerNode( n ) {
     RED.nodes.createNode(this,n );
     var node = this;
-    var units = n.units;
     var name = n.name;
     var locationtype = n.locationtype;
     var location= n.location;
     var territory=n.territory;
-    var pwsConfigNode;
+    var covConfigNode;
     var apiKey;
-    var request = require('request-promise');
+    const got = require('got');
 
     // Retrieve the config node
-    pwsConfigNode = RED.nodes.getNode(n.apikey);
-    apiKey = pwsConfigNode.credentials.apikey;
+    covConfigNode = RED.nodes.getNode(n.apikey);
+    apiKey = covConfigNode.credentials.apikey;
 
     if (!territory) {
       territory = 'country';
@@ -38,14 +48,18 @@ module.exports = function(RED) {
         msg.twcparams.locationtype = locationtype;
       }
 
-      request('https://api.weather.com/v3/wx/disease/tracker/'+msg.twcparams.territory+'/60day?'+ msg.twcparams.locationtype + '='+ msg.twcparams.location +'&format=json&apiKey='+apiKey)
-        .then(function (response) {
-          msg.payload = JSON.parse(response);
+      (async () => {
+        try {
+          const response = await got('https://api.weather.com/v3/wx/disease/tracker/'+msg.twcparams.territory+'/60day?'+ msg.twcparams.locationtype + '='+ msg.twcparams.location +'&format=json&apiKey='+apiKey);
+          // console.log(response.body)
+          msg.payload = JSON.parse(response.body);
           node.send(msg);
-        })
-        .catch(function (error) {
+        } catch (error) {
+          // console.log(error.response.body);
+          node.warn(error.response.body);
           node.send(msg);
-        });
+        }
+      })();
     });
   }
   RED.nodes.registerType("twc-covid19-tracker",twcCovid19TrackerNode);

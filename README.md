@@ -1,7 +1,7 @@
 # node-red-contrib-twc-covid19-tracker
 Node-RED node for The Weather Company (TWC) COVID-19 Disease Tracking API
 
-This node implements the [TWC APIs for COVID-19 Disease Tracking](https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0).
+These nodes implements the [TWC APIs for COVID-19 Disease Tracking](https://weather.com/swagger-docs/ui/sun/v3/sunV3DiseaseTracker.json).
 
 The API allows you to track the progression of a disease for a given location.  It provides information regarding active diseases including confirmed cases, deaths, and recoveries over a period of up to 60 days in the past.
 
@@ -18,10 +18,11 @@ $ npm install node-red-contrib-twc-covid19-tracker
 
 To use **The Weather Company API for COVID-19 Disease Tracking**, you need an **API key**.  [Call for Code](https://developer.ibm.com/callforcode) participants can register to join the [Call for Code 2020 COVID Challenge](https://developer.ibm.com/callforcode/getstarted/covid-19/) and request a TWC API key for this Node-RED node at [callforcode.weather.com](https://callforcode.weather.com) A time-limited API key will be sent to you via email.
 
-## node-red-contrib-twc-covid19-tracker Node
+## node-red-contrib-twc-covid19-tracker Nodes
 
-This Node-RED package creates a **twc covid19 tracker** node in your Node-RED palette.
-- **twc covid19 tracker** - Query 60 day history of COVID-19 statistics at the Country (USA), State, County level by Geocode, Place ID or Postal Code.
+These Node-RED package creates a **twc covid19 tracker** nodes in your Node-RED palette.
+- **twc covid19 tracker** - Query 60 day history of COVID-19 statistics at the Country, State, County level by Geocode, Place ID or Postal Code.
+- **twc covid19 country report** - Query the current state of a disease for a set of countries globally.
 
 Review the [CHANGELOG](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/blob/master/CHANGELOG.md) for enhancement history.
 
@@ -47,9 +48,11 @@ The Weather Company offers [TWC Weather Data Packages](https://business.weather.
 
 The TWC Disease Tracker API allows you to track the progression of the COVID-19 disease for a given location. It provides information regarding active diseases including confirmed cases, deaths, and recoveries over a period of up to 60 days in the past.
 
-See the [online documentation](https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0) for more information about The Weather Company API for Disease Tracking.
+See the [online documentation](https://weather.com/swagger-docs/ui/sun/v3/sunV3DiseaseTracker.json) for more information about The Weather Company API for Disease Tracking.
 
-The API returns an array of json objects containing COVID-19 data which you can integrate into dashboards or applications.
+See the [online documentation](https://weather.com/swagger-docs/ui/sun/v3/sunV3DiseaseTrackerCountryList.json) for more information about The Weather Company API for Global Disease Country Reporting.
+
+The APIs returns an array of json objects containing COVID-19 data which you can integrate into dashboards or applications.
 
 ## Tutorials
 
@@ -64,7 +67,7 @@ Access COVID-19 location and infection data through an API provided by **The Wea
 Node-RED dashboard, charts, and tables. Use Node-RED for data analysis and data visualization of COVID-19 infections
 by country, state and county.
 
-Two examples are provided in the [examples](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/tree/master/examples) folder.
+Three examples are provided in the [examples](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/tree/master/examples) folder.
 
 ___
 
@@ -74,7 +77,7 @@ ___
 
 ___
 
-- Here is an example Node-RED Dashboard that displays 60 days of COVID-19 historical data in a table and on a chart.
+- This example Node-RED Dashboard displays 60 days of USA State COVID-19 historical data in a table and on a chart.
 - This example requires some additional dependencies:
   - [node-red-node-ui-table](https://flows.nodered.org/node/node-red-node-ui-table)
   - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
@@ -82,6 +85,16 @@ ___
 
 ![COVID-19 Dashboard](screenshots/Node-RED-COVID19-Dashboard-flow.png)
 
+___
+
+- This example Node-RED Dashboard displays all of the counties in the State of New Jersey in a table and plots 60 days of COVID-19 historical data on a chart.
+- This example requires some additional dependencies:
+  - [node-red-node-ui-table](https://flows.nodered.org/node/node-red-node-ui-table)
+  - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
+- Import this [Node-RED-covid19-county-dashboard.json](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/blob/master/examples/Node-RED-covid19-county-dashboard.json) flow.
+
+![COVID-19 Dashboard](screenshots/Node-RED-COVID19-StateCounty-Dashboard-flow.png)
+![COVID-19 Dashboard](screenshots/Node-RED-COVID19-StateCounty-Dashboard.png)
 ___
 
 ### Author

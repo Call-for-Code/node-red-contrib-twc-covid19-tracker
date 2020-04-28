@@ -67,7 +67,7 @@
         "type": "comment",
         "z": "977ec606.0271b",
         "name": "TWC Disease Tracker Data API Docs",
-        "info": "https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0/edit",
+        "info": "https://docs.google.com/document/d/1VOOQ0yp_QFltYDerXvD-Ew03XdYZeysnvX86EcaTik0\n\nhttps://docs.google.com/document/d/1ALesLRDLvDxgG-bc6CxLtPv0_KMji6o17ZmKyFUG0Kg",
         "x": 170,
         "y": 40,
         "wires": []
@@ -151,7 +151,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 480,
         "y": 80,
         "wires": [
             []
@@ -174,7 +174,7 @@
                 "t": "set",
                 "p": "geocode",
                 "pt": "msg",
-                "to": "40.74,-73.99",
+                "to": "50.907054,-1.399976",
                 "tot": "str"
             }
         ],
@@ -308,7 +308,7 @@
                 "t": "set",
                 "p": "postalKey",
                 "pt": "msg",
-                "to": "10001:US",
+                "to": "07450:US",
                 "tot": "str"
             }
         ],
@@ -397,7 +397,7 @@
                 "t": "set",
                 "p": "geocode",
                 "pt": "msg",
-                "to": "40.74,-73.99",
+                "to": "40.58,-111.66",
                 "tot": "str"
             }
         ],
@@ -770,5 +770,98 @@
                 "ea4f4f13.b882e"
             ]
         ]
+    },
+    {
+        "id": "2b430e4b.e9ecb2",
+        "type": "http request",
+        "z": "977ec606.0271b",
+        "name": "TWC Disease Tracker API - Get All Country stats",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "https://api.weather.com/v3/wx/disease/tracker/countryList/current?format=json&apiKey={{apikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 590,
+        "y": 780,
+        "wires": [
+            [
+                "7e6cfeea.85a1e"
+            ]
+        ]
+    },
+    {
+        "id": "8bca377d.73a7",
+        "type": "comment",
+        "z": "977ec606.0271b",
+        "name": "Query All Country metrics",
+        "info": "",
+        "x": 150,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "ec0b34cf.f4a448",
+        "type": "inject",
+        "z": "977ec606.0271b",
+        "name": "All Country Stats",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 780,
+        "wires": [
+            [
+                "d4c6143e.fbc038"
+            ]
+        ]
+    },
+    {
+        "id": "d4c6143e.fbc038",
+        "type": "change",
+        "z": "977ec606.0271b",
+        "name": "API Key",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "apikey",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 780,
+        "wires": [
+            [
+                "2b430e4b.e9ecb2"
+            ]
+        ]
+    },
+    {
+        "id": "7e6cfeea.85a1e",
+        "type": "debug",
+        "z": "977ec606.0271b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 950,
+        "y": 780,
+        "wires": []
     }
 ]
