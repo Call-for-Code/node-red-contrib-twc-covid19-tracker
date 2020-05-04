@@ -19,7 +19,7 @@ module.exports = function(RED) {
     var territory=n.territory;
     var covConfigNode;
     var apiKey;
-    const got = require('got');
+    const axios = require('axios');
 
     // Retrieve the config node
     covConfigNode = RED.nodes.getNode(n.apikey);
@@ -50,13 +50,14 @@ module.exports = function(RED) {
 
       (async () => {
         try {
-          const response = await got('https://api.weather.com/v3/wx/disease/tracker/'+msg.twcparams.territory+'/60day?'+ msg.twcparams.locationtype + '='+ msg.twcparams.location +'&format=json&apiKey='+apiKey);
-          // console.log(response.body)
-          msg.payload = JSON.parse(response.body);
+          const response = await axios.get('https://api.weather.com/v3/wx/disease/tracker/'+msg.twcparams.territory+'/60day?'+ msg.twcparams.locationtype + '='+ msg.twcparams.location +'&format=json&apiKey='+apiKey);
+          //console.log(response.data)
+          msg.payload = response.data;
           node.send(msg);
         } catch (error) {
-          // console.log(error.response.body);
-          node.warn(error.response.body);
+          console.log(error.response.data);
+          //console.log(error.response.status);
+          node.warn(error.response.data);
           node.send(msg);
         }
       })();
