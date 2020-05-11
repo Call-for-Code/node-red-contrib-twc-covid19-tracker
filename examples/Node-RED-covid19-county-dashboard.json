@@ -19,7 +19,7 @@
         "temp": "",
         "skip": "0",
         "strings": true,
-        "x": 690,
+        "x": 570,
         "y": 100,
         "wires": [
             [
@@ -38,7 +38,7 @@
         "tostatus": false,
         "complete": "twcparams",
         "targetType": "msg",
-        "x": 1140,
+        "x": 1040,
         "y": 100,
         "wires": []
     },
@@ -50,9 +50,9 @@
         "locationtype": "geocode",
         "location": "07450:US",
         "territory": "country",
-        "apikey": "31e705d1.b851aa",
-        "x": 210,
-        "y": 240,
+        "apikey": "",
+        "x": 190,
+        "y": 280,
         "wires": [
             [
                 "727953cf.5d0e3c"
@@ -99,7 +99,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 890,
+        "x": 790,
         "y": 100,
         "wires": [
             [
@@ -119,7 +119,7 @@
         "syntax": "mustache",
         "template": "Atlantic County, New Jersey,39.469354,-74.633758\nBergen County, New Jersey,40.959090,-74.074522\nBurlington County, New Jersey,39.875786,-74.663006\nCamden County, New Jersey,39.802352,-74.961251\nCape May County, New Jersey,39.086143,-74.847716\nCumberland County, New Jersey,39.328387,-75.121644\nEssex County, New Jersey,40.787217,-74.246136\nGloucester County, New Jersey,39.721019,-75.143708\nHudson County, New Jersey,40.731384,-74.078627\nHunterdon County, New Jersey,40.565283,-74.911970\nMercer County, New Jersey,40.282503,-74.703724\nMiddlesex County, New Jersey,40.439593,-74.407585\nMonmouth County, New Jersey,40.287056,-74.152446\nMorris County, New Jersey,40.858581,-74.547427\nOcean County, New Jersey,39.865850,-74.263027\nPassaic County, New Jersey,41.033763,-74.300308\nSalem County, New Jersey,39.573828,-75.357356\nSomerset County, New Jersey,40.565522,-74.619930\nSussex County, New Jersey,41.137424,-74.691855\nUnion County, New Jersey,40.659871,-74.308696\nWarren County, New Jersey,40.853524,-75.009542",
         "output": "str",
-        "x": 510,
+        "x": 390,
         "y": 100,
         "wires": [
             [
@@ -137,8 +137,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 770,
-        "y": 200,
+        "x": 790,
+        "y": 280,
         "wires": []
     },
     {
@@ -184,13 +184,14 @@
         ],
         "outputs": 1,
         "cts": true,
-        "x": 810,
-        "y": 240,
+        "x": 190,
+        "y": 440,
         "wires": [
             [
                 "31386413.cc2474",
                 "d927282c.c6d938",
-                "d4de80fd.7d38f8"
+                "d4de80fd.7d38f8",
+                "3bbb2328.0e95ec"
             ]
         ]
     },
@@ -212,7 +213,7 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 170,
+        "x": 150,
         "y": 100,
         "wires": [
             [
@@ -226,7 +227,7 @@
         "z": "fcca33ef.033d48",
         "name": "Query County Reports",
         "info": "",
-        "x": 160,
+        "x": 140,
         "y": 60,
         "wires": []
     },
@@ -251,7 +252,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 410,
-        "y": 240,
+        "y": 280,
         "wires": [
             [
                 "77fe370e.8a3d78",
@@ -267,8 +268,8 @@
         "func": "// Save the COVID data for chart\nflow.set( \"COVIDdata\", msg.payload ) ;\n\n// Build a table\nvar TableArray = [];\nfor( i=0; i < msg.payload.length; i++ ) {\n      var TableEntry = {};\n      TableEntry.recordLocation = msg.payload[i].covid19.recordLocation ;\n      TableEntry.confirmed = msg.payload[i].covid19.confirmed[0] ;\n      TableEntry.deaths = msg.payload[i].covid19.deaths[0] ;\n      TableArray.push( TableEntry );\n}\n\nmsg.payload = TableArray;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 570,
-        "y": 240,
+        "x": 590,
+        "y": 280,
         "wires": [
             [
                 "36162b4.f85f1d4",
@@ -287,8 +288,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1050,
-        "y": 240,
+        "x": 410,
+        "y": 500,
         "wires": []
     },
     {
@@ -301,8 +302,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 570,
-        "y": 200,
+        "x": 590,
+        "y": 240,
         "wires": []
     },
     {
@@ -313,8 +314,8 @@
         "func": "// This function plots a line chart of 60 days of COVID infections\n// msg.payload.covid19.dateReport[0]  // most recent date, counting backwards in time\n// msg.payload.covid19.confirmed[0]\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar dateReport = new Date( msg.payload.covid19.dateReport[0] ).getTime() ;\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Confirmed\",\"Deaths\"],\n                   \"data\":[ [{\"x\":dateReport,\"y\":msg.payload.covid19.confirmed[0]}],\n                            [{\"x\":dateReport,\"y\":msg.payload.covid19.deaths[0]}],\n                          ],\n                   \"labels\":[\"\",\"\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.covid19.dateReport.length; i++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[i] ).getTime() ;\n    ChartData[0].data[0].push( { \"x\":dateReport,\"y\":msg.payload.covid19.confirmed[i] } )\n    ChartData[0].data[1].push( { \"x\":dateReport,\"y\":msg.payload.covid19.deaths[i] } )\n}\n\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 260,
-        "y": 380,
+        "x": 500,
+        "y": 420,
         "wires": [
             [
                 "f3f1d8be.bc7c18"
@@ -327,12 +328,12 @@
         "z": "fcca33ef.033d48",
         "name": "COVID Chart",
         "group": "f1af2f5d.b695b",
-        "order": 1,
+        "order": 2,
         "width": "12",
-        "height": "10",
-        "label": "",
+        "height": "6",
+        "label": "Total COVID-19 Infections and Deaths",
         "chartType": "line",
-        "legend": "false",
+        "legend": "true",
         "xformat": "HH:mm:ss",
         "interpolate": "linear",
         "nodata": "",
@@ -347,7 +348,7 @@
         "useUTC": false,
         "colors": [
             "#1f77b4",
-            "#aec7e8",
+            "#d62728",
             "#ff7f0e",
             "#2ca02c",
             "#98df8a",
@@ -358,8 +359,8 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 510,
-        "y": 380,
+        "x": 930,
+        "y": 420,
         "wires": [
             []
         ]
@@ -368,9 +369,9 @@
         "id": "7685013c.e8b648",
         "type": "comment",
         "z": "fcca33ef.033d48",
-        "name": "Instructions",
+        "name": "How to find County geocoordinates",
         "info": "I wanted to build an app that reports Covid-19 data by state / county.  I went on a long hunt to find an API that would return all counties in a state.  The best I could come up with is parsing the data from this wikipedia page...\nhttps://en.wikipedia.org/wiki/User:Michael_J/County_table \n\n- Edit the wikipedia page\n- Just copy the contents\n- Save the contents as a local file allcounties.txt\n- Cancel out of the wikipedia page edit.\n\nOn my Linux system, I grabbed three columns [ County name, Latitude, Longitude ], then cleaned it up.  \nHere's the pipeline of commands\n- cat the file\n- cut columns 13,42,45\n- remove the degree symbol\n- remove extraneous [ characters\n- grep on the + to give you all counties in USA\n- 3049 rows of data\n- grep on the State you are interested in\n- replace | with commas\n- remove the +\n- replace the unicode – with a normal dash - (the API expects a - minus longitude)\n- Copy the 21 counties in NJ into the template node\n\n\n$ cat allcounties.txt | cut -d\\| -f13,42,45 | tr -d '°' | tr -d '[' | grep \"+\" | grep \"New Jersey\" | sed -e 's/|/,/g' | sed -e 's/+//g' | sed -e 's/–/-/g'",
-        "x": 370,
+        "x": 420,
         "y": 60,
         "wires": []
     },
@@ -382,7 +383,7 @@
         "func": "// This function node builds an attribution string\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nmsg.payload = COVIDdata[msg.row].covid19.recordLocation + \" - \" + COVIDdata[msg.row].covid19.source[0]\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 730,
+        "x": 430,
         "y": 380,
         "wires": [
             [
@@ -395,16 +396,75 @@
         "type": "ui_text",
         "z": "fcca33ef.033d48",
         "group": "f1af2f5d.b695b",
-        "order": 2,
+        "order": 1,
         "width": 0,
         "height": 0,
         "name": "County Label",
         "label": "",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 910,
+        "x": 930,
         "y": 380,
         "wires": []
+    },
+    {
+        "id": "3bbb2328.0e95ec",
+        "type": "function",
+        "z": "fcca33ef.033d48",
+        "name": " Plot new cases and 7 day moving average of COVID new cases",
+        "func": "// This function plots a line chart of 60 days of COVID infections\n// msg.payload.covid19.dateReport[0]  // most recent date, counting backwards in time\n// msg.payload.covid19.confirmed[0]\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar dateReport = new Date( msg.payload.covid19.dateReport[0] ).getTime() ;\n// Calculate the first 7 day moving average\n\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"New Cases\",\"7 Day Moving Average\"],\n                   \"data\":[ [{\"x\":dateReport,\"y\":msg.payload.covid19.confirmed[0]-msg.payload.covid19.confirmed[1]}],\n                            [{\"x\":dateReport,\"y\":0}]\n                          ],\n                   \"labels\":[\"\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.covid19.dateReport.length; i++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[i] ).getTime() ;\n    if( i != (msg.payload.covid19.dateReport.length-1) ) {\n        ChartData[0].data[0].push( { \"x\":dateReport,\"y\":msg.payload.covid19.confirmed[i]-msg.payload.covid19.confirmed[i+1] } )\n    }\n}\n\n// 7 Day Moving Average\nvar numOfDays = 6;\nfor( var j=0; j < (msg.payload.covid19.dateReport.length - numOfDays); j++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[j] ).getTime() ;\n    \n    var total = 0;\n    for(var m = j; m < (j + numOfDays); m++) {\n        total += ChartData[0].data[0][m].y;\n    }\n    ChartData[0].data[1].push( { \"x\":dateReport,\"y\": Math.round(total / numOfDays) } );\n }\n\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[1].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "3dc9b027.f8d0f"
+            ]
+        ]
+    },
+    {
+        "id": "3dc9b027.f8d0f",
+        "type": "ui_chart",
+        "z": "fcca33ef.033d48",
+        "name": "",
+        "group": "f1af2f5d.b695b",
+        "order": 3,
+        "width": "12",
+        "height": "6",
+        "label": "New Cases",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#d62728",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 460,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "fc080bf2.5756a8",
