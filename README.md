@@ -70,12 +70,14 @@ by country, state and county.
 Three examples are provided in the [examples](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/tree/master/examples) folder.
 
 ___
+#### Example #1
 
 - Test each of the TWC COVID-19 APIs by importing this [covid19-api-test.json](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/blob/master/examples/covid19-api-test.json) flow.
 
 ![COVID API Test Example](screenshots/Node-RED-TWC-COVID-api-test-flow.png)
 
 ___
+#### Example #2
 
 - This example Node-RED Dashboard displays 60 days of USA State COVID-19 historical data in a table and on a chart.
 - This example requires some additional dependencies:
@@ -84,10 +86,11 @@ ___
 - Import this [Node-RED-covid19-dashboard.json](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/blob/master/examples/Node-RED-covid19-dashboard.json) flow.
 
 ![COVID-19 Dashboard](screenshots/Node-RED-COVID19-Dashboard-flow.png)
-
+![Node-RED COVID-19 Dashboard](screenshots/Node-RED-COVID19-Dashboard.png)
 ___
+#### Example #3
 
-- This example Node-RED Dashboard displays all of the counties in the State of New Jersey in a table and plots 60 days of COVID-19 historical data on a chart.
+- This example Node-RED Dashboard displays all of the counties in the State of New Jersey in a table and plots 60 days of COVID-19 historical data on a chart.  It also plots a chart of new cases reported each day and a seven day moving average that demonstrates flattening the curve.
 - This example requires some additional dependencies:
   - [node-red-node-ui-table](https://flows.nodered.org/node/node-red-node-ui-table)
   - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
