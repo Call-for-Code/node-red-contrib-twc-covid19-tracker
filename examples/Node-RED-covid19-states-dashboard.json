@@ -1,0 +1,885 @@
+[
+    {
+        "id": "fe41ff40.6d707",
+        "type": "tab",
+        "label": "State COVID Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "412e058b.efdb5c",
+        "type": "group",
+        "z": "fe41ff40.6d707",
+        "name": "Load State Table",
+        "style": {
+            "stroke": "#ff0000",
+            "fill": "#ffefbf",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "7bbd168d.589e",
+            "7293d06e.1e1fe",
+            "f8414819.6c23a8",
+            "80e0d785.705c6",
+            "1d41ca9.c9e6335"
+        ],
+        "x": 314,
+        "y": 19,
+        "w": 572,
+        "h": 122
+    },
+    {
+        "id": "4b24435e.22d1e4",
+        "type": "group",
+        "z": "fe41ff40.6d707",
+        "name": "COVID Map of USA",
+        "style": {
+            "stroke": "#ff0000",
+            "fill": "#ffefbf",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "82d2bdd6.39cc18",
+            "9baad5da.dd6958",
+            "14378274.ea5dc6",
+            "cfbd7264.1ebad8",
+            "ede86840.3c889"
+        ],
+        "x": 274,
+        "y": 619,
+        "w": 632,
+        "h": 142
+    },
+    {
+        "id": "80279542.4197a8",
+        "type": "group",
+        "z": "fe41ff40.6d707",
+        "name": "Build Charts and Tables",
+        "style": {
+            "stroke": "#ff0000",
+            "fill": "#ffefbf",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "2be8db60.02a144",
+            "72ec1ede.a755c8",
+            "a76de6c7.4665",
+            "d3536626.c27788",
+            "9f07b21e.30673",
+            "ba4721cf.0dadb8",
+            "d086ca3.c0af338",
+            "5e63e126.7e591",
+            "39063ac6.69f7d6",
+            "bbbeef71.069c4",
+            "7b6cdaf3.9e81dc",
+            "95a6c25f.06f658"
+        ],
+        "x": 74,
+        "y": 339,
+        "w": 1022,
+        "h": 242
+    },
+    {
+        "id": "de7010b3.148f48",
+        "type": "group",
+        "z": "fe41ff40.6d707",
+        "name": "Query COVID Stats for all 50 States ",
+        "style": {
+            "stroke": "#ff0000",
+            "fill": "#ffefbf",
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "c2912923.f2f5d",
+            "d8473272.60345",
+            "ac96db8b.aa1aa8",
+            "e4438d20.b78af8",
+            "7db2704f.3069c8",
+            "ea1ed1a7.d3e848",
+            "edf6ae2.057e2d"
+        ],
+        "x": 34,
+        "y": 179,
+        "w": 1132,
+        "h": 122
+    },
+    {
+        "id": "c2912923.f2f5d",
+        "type": "change",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "State API Parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "twcparams",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.location",
+                "pt": "msg",
+                "to": "payload.zipcode",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.locationtype",
+                "pt": "msg",
+                "to": "postalKey",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "twcparams.territory",
+                "pt": "msg",
+                "to": "state",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "d8473272.60345"
+            ]
+        ]
+    },
+    {
+        "id": "d8473272.60345",
+        "type": "twc-covid19-tracker",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "",
+        "locationtype": "postalKey",
+        "location": "07450:US",
+        "territory": "state",
+        "apikey": "",
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "ac96db8b.aa1aa8",
+                "ea1ed1a7.d3e848"
+            ]
+        ]
+    },
+    {
+        "id": "ac96db8b.aa1aa8",
+        "type": "join",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "",
+        "mode": "auto",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 610,
+        "y": 260,
+        "wires": [
+            [
+                "e4438d20.b78af8",
+                "7db2704f.3069c8"
+            ]
+        ]
+    },
+    {
+        "id": "e4438d20.b78af8",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "Build Table",
+        "func": "// Save the COVID data for chart\nflow.set( \"COVIDdata\", msg.payload ) ;\n\n// Build a table\nvar TableArray = [];\nfor( i=0; i < msg.payload.length; i++ ) {\n      var TableEntry = {};\n      TableEntry.recordLocation = msg.payload[i].covid19.recordLocation ;\n      TableEntry.confirmed = msg.payload[i].covid19.confirmed[0] ;\n      TableEntry.deaths = msg.payload[i].covid19.deaths[0] ;\n      TableArray.push( TableEntry );\n}\n\nmsg.payload = TableArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 850,
+        "y": 260,
+        "wires": [
+            [
+                "edf6ae2.057e2d",
+                "7b6cdaf3.9e81dc"
+            ]
+        ]
+    },
+    {
+        "id": "7db2704f.3069c8",
+        "type": "debug",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 850,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "ea1ed1a7.d3e848",
+        "type": "debug",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "edf6ae2.057e2d",
+        "type": "debug",
+        "z": "fe41ff40.6d707",
+        "g": "de7010b3.148f48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "2be8db60.02a144",
+        "type": "ui_chart",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": "COVID Chart",
+        "group": "9864ea5e.2d55a8",
+        "order": 2,
+        "width": "12",
+        "height": "7",
+        "label": "60 Days of Infections",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "MM/DD",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 710,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72ec1ede.a755c8",
+        "type": "ui_table",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "group": "3e64be0d.d7b11a",
+        "name": "COVID Data",
+        "order": 2,
+        "width": "8",
+        "height": "14",
+        "columns": [
+            {
+                "field": "dateReport",
+                "title": "Date",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "confirmed",
+                "title": "Confirmed",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "deaths",
+                "title": "Deaths",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 710,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a76de6c7.4665",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": "Build Table",
+        "func": "// This function node builds Table for the State\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar TableArray = [];\nfor( i=0; i < msg.payload.covid19.dateReport.length; i++ ) {\n      var TableEntry = {};\n      TableEntry.dateReport = msg.payload.covid19.dateReport[i] ;\n      TableEntry.confirmed = msg.payload.covid19.confirmed[i] ;\n      TableEntry.deaths = msg.payload.covid19.deaths[i] ;\n      TableArray.push( TableEntry );\n}\n\nmsg.payload = TableArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 540,
+        "wires": [
+            [
+                "72ec1ede.a755c8"
+            ]
+        ]
+    },
+    {
+        "id": "d3536626.c27788",
+        "type": "ui_text",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "group": "9864ea5e.2d55a8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Location",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 700,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9f07b21e.30673",
+        "type": "debug",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ba4721cf.0dadb8",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": " Plot 60 days of COVID infections",
+        "func": "// This function plots a line chart of 60 days of COVID infections\n// msg.payload.covid19.dateReport[0]  // most recent date, counting backwards in time\n// msg.payload.covid19.confirmed[0]\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar dateReport = new Date( msg.payload.covid19.dateReport[0] ).getTime() ;\n// The Array has this structure, inserting the first element as a template.\nvar ChartData = [ {\"series\":[\"Confirmed\",\"Deaths\"],\n                   \"data\":[ [{\"x\":dateReport,\"y\":msg.payload.covid19.confirmed[0]}],\n                            [{\"x\":dateReport,\"y\":msg.payload.covid19.deaths[0]}],\n                          ],\n                   \"labels\":[\"\",\"\"]}];\n\n// Start at 1 because we've already added element 0 in the initial array definition\nfor( var i=1; i < msg.payload.covid19.dateReport.length; i++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[i] ).getTime() ;\n    ChartData[0].data[0].push( { \"x\":dateReport,\"y\":msg.payload.covid19.confirmed[i] } )\n    ChartData[0].data[1].push( { \"x\":dateReport,\"y\":msg.payload.covid19.deaths[i] } )\n}\n\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440,
+        "y": 460,
+        "wires": [
+            [
+                "2be8db60.02a144"
+            ]
+        ]
+    },
+    {
+        "id": "d086ca3.c0af338",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": "Attributions",
+        "func": "// This function node builds an attribution string\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nmsg.payload = COVIDdata[msg.row].covid19.recordLocation + \" - \" + COVIDdata[msg.row].covid19.source[0]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [
+                "d3536626.c27788",
+                "bbbeef71.069c4"
+            ]
+        ]
+    },
+    {
+        "id": "5e63e126.7e591",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": " Plot new cases and 7 day moving average of COVID new cases",
+        "func": "// This function plots a line chart of 60 days of COVID infections\n// msg.payload.covid19.dateReport[0]  // most recent date, counting backwards in time\n// msg.payload.covid19.confirmed[0]\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\nvar dateReport = new Date( msg.payload.covid19.dateReport[0] ).getTime() ;\n// Calculate the first 7 day moving average\n\n// The Array has this structure, set up a template.\nvar ChartData = [ {\"series\":[\"New Cases\",\"7 Day Moving Average\"],\n                   \"data\":[ [{}],\n                            [{}]\n                          ],\n                   \"labels\":[\"\"]}];\n\nfor( var i=0; i < msg.payload.covid19.dateReport.length; i++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[i] ).getTime() ;\n    if( i != (msg.payload.covid19.dateReport.length-1) ) {\n        ChartData[0].data[0].push( { \"x\":dateReport,\"y\":msg.payload.covid19.confirmed[i]-msg.payload.covid19.confirmed[i+1] } )\n    }\n}\n\n// 7 Day Moving Average\nvar numOfDays = 6;\nfor( var j=0; j < (msg.payload.covid19.dateReport.length - numOfDays); j++ ) {\n    dateReport = new Date( msg.payload.covid19.dateReport[j] ).getTime() ;\n    \n    var total = 0;\n    for(var m = j; m < (j + numOfDays); m++) {\n        total += ChartData[0].data[0][m].y;\n    }\n    // The current day always has the same count as yesterday, this pulls the 7 day\n    // average down. Compensate by only showing a 6 day avg for the first element\n    if( j === 1){\n        ChartData[0].data[1].push( { \"x\":dateReport,\"y\": Math.round(total / (numOfDays-1)) } );\n    } else {\n        ChartData[0].data[1].push( { \"x\":dateReport,\"y\": Math.round(total / numOfDays) } );\n    }\n }\n\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[0].sort(function sortNumber(a,b) { return a.x - b.x; });\n// Sort on the time so that we give the Chart node an array in time order\nChartData[0].data[1].sort(function sortNumber(a,b) { return a.x - b.x; });\n\nmsg.payload = ChartData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 500,
+        "wires": [
+            [
+                "39063ac6.69f7d6",
+                "95a6c25f.06f658"
+            ]
+        ]
+    },
+    {
+        "id": "39063ac6.69f7d6",
+        "type": "ui_chart",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": "",
+        "group": "9864ea5e.2d55a8",
+        "order": 3,
+        "width": "12",
+        "height": "7",
+        "label": "New Cases",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "MM/DD",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#d62728",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bbbeef71.069c4",
+        "type": "ui_text",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "group": "3e64be0d.d7b11a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Location",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 700,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "7b6cdaf3.9e81dc",
+        "type": "ui_table",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "group": "9e0e2096.118d78",
+        "name": "States",
+        "order": 2,
+        "width": "8",
+        "height": "14",
+        "columns": [
+            {
+                "field": "recordLocation",
+                "title": "State",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "confirmed",
+                "title": "Confirmed",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "deaths",
+                "title": "Deaths",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 1,
+        "cts": true,
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "a76de6c7.4665",
+                "9f07b21e.30673",
+                "ba4721cf.0dadb8",
+                "d086ca3.c0af338",
+                "5e63e126.7e591",
+                "9baad5da.dd6958"
+            ]
+        ]
+    },
+    {
+        "id": "82d2bdd6.39cc18",
+        "type": "ui_worldmap",
+        "z": "fe41ff40.6d707",
+        "g": "4b24435e.22d1e4",
+        "group": "385f80bb.5b8c8",
+        "order": 2,
+        "width": "28",
+        "height": "10",
+        "name": "",
+        "lat": "39.04928",
+        "lon": "-95.67118",
+        "zoom": "4",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "path": "/USA",
+        "x": 670,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "95a6c25f.06f658",
+        "type": "debug",
+        "z": "fe41ff40.6d707",
+        "g": "80279542.4197a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7bbd168d.589e",
+        "type": "inject",
+        "z": "fe41ff40.6d707",
+        "g": "412e058b.efdb5c",
+        "name": "Load Table of States",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 460,
+        "y": 100,
+        "wires": [
+            [
+                "1d41ca9.c9e6335"
+            ]
+        ]
+    },
+    {
+        "id": "7293d06e.1e1fe",
+        "type": "comment",
+        "z": "fe41ff40.6d707",
+        "g": "412e058b.efdb5c",
+        "name": "Load States - COVID Data",
+        "info": "",
+        "x": 730,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "f8414819.6c23a8",
+        "type": "csv",
+        "z": "fe41ff40.6d707",
+        "g": "412e058b.efdb5c",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "state,zipcode",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 810,
+        "y": 100,
+        "wires": [
+            [
+                "c2912923.f2f5d"
+            ]
+        ]
+    },
+    {
+        "id": "80e0d785.705c6",
+        "type": "ui_button",
+        "z": "fe41ff40.6d707",
+        "g": "412e058b.efdb5c",
+        "name": "",
+        "group": "9e0e2096.118d78",
+        "order": 1,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "Load State COVID Stats",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 450,
+        "y": 60,
+        "wires": [
+            [
+                "1d41ca9.c9e6335"
+            ]
+        ]
+    },
+    {
+        "id": "1d41ca9.c9e6335",
+        "type": "template",
+        "z": "fe41ff40.6d707",
+        "g": "412e058b.efdb5c",
+        "name": "States",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\"Alabama\",\"35801:US\"\n\"Alaska\",\"99501:US\"\n\"Arizona\",\"85001:US\"\n\"Arkansas\",\"72201:US\"\n\"California\",\"90001:US\"\n\"Colorado\",\"80201:US\"\n\"Connecticut\",\"06101:US\"\n\"Delaware\",\"19901:US\"\n\"Florida\",\"33124:US\"\n\"Georgia\",\"30301:US\"\n\"Hawaii\",\"96801:US\"\n\"Idaho\",\"83254:US\"\n\"Illinois\",\"60601:US\"\n\"Indiana\",\"46201:US\"\n\"Iowa\",\"50301:US\"\n\"Kansas\",\"67201:US\"\n\"Kentucky\",\"41701:US\"\n\"Louisiana\",\"70112:US\"\n\"Maine\",\"04032:US\"\n\"Massachusetts\",\"02111:US\"\n\"Maryland\",\"21201:US\"\n\"Michigan\",\"49036:US\"\n\"Minnesota\",\"55801:US\"\n\"Missouri\",\"63101:US\"\n\"Mississippi\",\"39530:US\"\n\"Montana\",\"59044:US\"\n\"Nebraska\",\"68901:US\"\n\"New Hampshire\",\"03217:US\"\n\"New Jersey\",\"07450:US\"\n\"New Mexico\",\"87501:US\"\n\"New York\",\"10001:US\"\n\"Nevada\",\"89501:US\"\n\"North Carolina\",\"27565:US\"\n\"North Dakota\",\"58282:US\"\n\"Ohio\",\"44101:US\"\n\"Oklahoma\",\"74101:US\"\n\"Oregon\",\"97201:US\"\n\"Pennsylvania\",\"15201:US\"\n\"Rhode Island\",\"02840:US\"\n\"South Carolina\",\"29020:US\"\n\"South Dakota\",\"57401:US\"\n\"Tennessee\",\"37201:US\"\n\"Texas\",\"78701:US\"\n\"Utah\",\"84321:US\"\n\"Vermont\",\"05751:US\"\n\"Virginia\",\"24517:US\"\n\"Washington\",\"98004:US\"\n\"West Virginia\",\"25813:US\"\n\"Wisconsin\",\"53201:US\"\n\"Wyoming\",\"82941:US\"",
+        "output": "str",
+        "x": 670,
+        "y": 100,
+        "wires": [
+            [
+                "f8414819.6c23a8"
+            ]
+        ]
+    },
+    {
+        "id": "14378274.ea5dc6",
+        "type": "http request",
+        "z": "fe41ff40.6d707",
+        "g": "4b24435e.22d1e4",
+        "name": "TWC Location Lookup",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.weather.com/v3/location/search?query={{state}}&locationType=state&language=en-US&format=json&apiKey={{twcapikey}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 580,
+        "y": 660,
+        "wires": [
+            [
+                "ede86840.3c889",
+                "cfbd7264.1ebad8"
+            ]
+        ]
+    },
+    {
+        "id": "ede86840.3c889",
+        "type": "debug",
+        "z": "fe41ff40.6d707",
+        "g": "4b24435e.22d1e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "9baad5da.dd6958",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "4b24435e.22d1e4",
+        "name": "State Lookup",
+        "func": "// This function node prepares the TWC Location Search API\n// Use the TWC api key you received for the COVID Disease\n// Tracker API - http://callforcode.weather.com\nmsg.twcapikey=\"Insert your TWC api key here\";\n\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = COVIDdata[msg.row];\n\nif( typeof(msg.payload.covid19) == 'undefined' ) {\n  return null;    \n}\n\n// Look Up the Latitude/Longitude of the US State\nmsg.state = COVIDdata[msg.row].covid19.recordLocation+\",United States\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 660,
+        "wires": [
+            [
+                "14378274.ea5dc6"
+            ]
+        ]
+    },
+    {
+        "id": "cfbd7264.1ebad8",
+        "type": "function",
+        "z": "fe41ff40.6d707",
+        "g": "4b24435e.22d1e4",
+        "name": "Drop Pin on Map",
+        "func": "// This function node builds an Map location / pin\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = {\n    \"name\" : COVIDdata[msg.row].covid19.recordLocation,\n    \"Confirmed\" : COVIDdata[msg.row].covid19.confirmed[0],\n    \"Deaths\" : COVIDdata[msg.row].covid19.deaths[0],\n    \"lat\"  : msg.payload.location.latitude[0],\n    \"lon\"  : msg.payload.location.longitude[0],\n    \"command\" : { \"zoom\" : 4 }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 490,
+        "y": 720,
+        "wires": [
+            [
+                "82d2bdd6.39cc18"
+            ]
+        ]
+    },
+    {
+        "id": "9864ea5e.2d55a8",
+        "type": "ui_group",
+        "z": "",
+        "name": "State Charts",
+        "tab": "6778b94d.013978",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "3e64be0d.d7b11a",
+        "type": "ui_group",
+        "z": "",
+        "name": "State Stats",
+        "tab": "6778b94d.013978",
+        "order": 3,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "9e0e2096.118d78",
+        "type": "ui_group",
+        "z": "",
+        "name": "Select a State",
+        "tab": "6778b94d.013978",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "385f80bb.5b8c8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Map",
+        "tab": "6778b94d.013978",
+        "order": 4,
+        "disp": true,
+        "width": "28",
+        "collapse": false
+    },
+    {
+        "id": "6778b94d.013978",
+        "type": "ui_tab",
+        "z": "",
+        "name": "COVID State Tracker",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    }
+]
