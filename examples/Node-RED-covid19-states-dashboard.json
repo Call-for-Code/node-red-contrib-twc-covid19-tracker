@@ -815,7 +815,7 @@
         "z": "fe41ff40.6d707",
         "g": "4b24435e.22d1e4",
         "name": "Drop Pin on Map",
-        "func": "// This function node builds an Map location / pin\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = {\n    \"name\" : COVIDdata[msg.row].covid19.recordLocation,\n    \"Confirmed\" : COVIDdata[msg.row].covid19.confirmed[0],\n    \"Deaths\" : COVIDdata[msg.row].covid19.deaths[0],\n    \"lat\"  : msg.payload.location.latitude[0],\n    \"lon\"  : msg.payload.location.longitude[0],\n    \"command\" : { \"zoom\" : 4 }\n};\nreturn msg;",
+        "func": "// This function node builds an Map location / pin\nvar COVIDdata = flow.get(\"COVIDdata\");\n\nmsg.payload = {\n    \"name\" : COVIDdata[msg.row].covid19.recordLocation,\n    \"Confirmed\" : COVIDdata[msg.row].covid19.confirmed[0],\n    \"Deaths\" : COVIDdata[msg.row].covid19.deaths[0],\n    \"lat\"  : COVIDdata[msg.row].covid19.latitude,\n    \"lon\"  : COVIDdata[msg.row].covid19.longitude,\n    \"command\" : { \"zoom\" : 4 }\n};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
