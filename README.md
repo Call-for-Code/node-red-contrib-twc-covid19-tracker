@@ -122,6 +122,7 @@ outbreaks.  It also drops pins with state metrics on a map.  To determine the la
   - [node-red-node-ui-table](https://flows.nodered.org/node/node-red-node-ui-table)
   - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
   - [node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap)
+  - [node-red-node-group](https://flows.nodered.org/node/node-red-node-group)
 - Import this [Node-RED-covid19-states-dashboard.json](https://github.com/call-for-code/node-red-contrib-twc-covid19-tracker/blob/master/examples/Node-RED-covid19-states-dashboard.json) flow.
 
 ![COVID-19 Dashboard](screenshots/Node-RED-COVID19-States-Dashboard-flow.png)
