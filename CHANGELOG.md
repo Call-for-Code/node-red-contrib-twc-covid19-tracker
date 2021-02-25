@@ -1,4 +1,8 @@
 #### Change Log for node-red-contrib-twc-covid19-tracker
+
+- v0.3.1
+  - Bump axios version (CVE-2020-28168)
+
 - v0.3.0
   - Refactor nodes to use axios due to got errors on Mac OS X
 
